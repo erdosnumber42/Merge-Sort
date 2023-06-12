@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+void merge(int l, int m, int h, int a[])
+{
+    int* s=new int[h-l+1];
+    
+    int i=0;
+    int j=0;
+   while(i+l<=m && j+m+1<=h)
+   {
+       if(a[i+l]<=a[j+m+1])
+       {
+        s[i+j]=a[i+l];
+        i++;
+       }
+       else
+       {
+           s[i+j]=a[j+m+1];
+           j++;
+       }
+   }
+   while (i+l <=m ) {
+        s[i+j] = a[i+l];
+        i++;
+    }
+    while(j+m+1<=h)
+    {
+        s[i+j] = a[j+m+1];
+        j++;
+    }
+ 
+   for(int k=l;k<=h;k++)
+   {
+       a[k]=s[k-l];
+   }
+}
+int mergesort(int low, int high, int a[])
+{   if(low==high)
+        return 0;
+    int mid=(high+low)/2;
+    mergesort(low,mid,a);
+    mergesort(mid+1,high,a);
+    merge(low, mid, high, a);
+}
+int main() {
+    cout<<"Enter the size of the array";
+    int n;
+    cin>>n;
+    cout<<"enter the numbers";
+    int* a=new int[n];
+    for(int i=0;i<n;i++)
+    {
+        cin>>a[i];
+    }
+    mergesort(0,n,a);
+    for(int i=0;i<n;i++)   
+        cout<<a[i];
+    return 0;
+}
